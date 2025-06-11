@@ -594,20 +594,21 @@ void AoFState::calculateSidePots() {
 
 vector<float> AoFState::returns() {
     vector<float> net_changes(NUM_PLAYERS, 0.0);
+    vector<float> investments(NUM_PLAYERS, 0.0);
     
-    // If everyone folded except one player, they win the pot
-    net_changes[0] = -0.4;    // Others lose nothing
-    net_changes[1] = -1;
-
+    // Track actual investments made by each player
+    investments[0] = 0.4;  // Small blind (Player 0)
+    investments[1] = 1.0;  // Big blind (Player 1)
+    
+    // Players 2 and 3 either invest nothing (fold) or their entire stack (all-in)
+    for (int p : all_in_players) {
+        investments[p] += initial_stacks[p];
+    }
+    
+    // Count active (non-folded) players
     int active_count = 0;
     int last_active = -1;
-    for (int p = 2; p < NUM_PLAYERS; p++) {
-        if (!folded[p]) {
-            active_count++;
-            last_active = p;
-        }
-    }
-    for (int p = 0; p < 2; p++) {
+    for (int p = 0; p < NUM_PLAYERS; p++) {
         if (!folded[p]) {
             active_count++;
             last_active = p;
@@ -615,23 +616,30 @@ vector<float> AoFState::returns() {
     }
     
     if (active_count == 1) {
-        // Everyone folded case
-        // Note: In many poker rooms, rake is not taken if there's no flop (no community cards)
-        // But some rooms take rake even in this case. Adjust according to your rules.
+        // Everyone folded except one player - they win the pot
+        float total_pot = 1.4;  // Blinds only
+        
+        // Apply rake and fees (many rooms don't take rake on preflop fold, but some do)
+        // For simplicity, we'll apply rake here - adjust based on your rules
         float rake_amount = game->rake_per_hand;
         float jackpot_fee = game->jackpot_fee_per_hand;
         
-        // Option 1: No rake on fold (common rule)
-        net_changes[last_active] += 1.4;  // Winner gets both blinds
+        // Winner gets the pot minus rake/fees
+        float adjusted_pot = total_pot - rake_amount - jackpot_fee;
         
-        // Option 2: Apply rake even on fold (uncomment if this is your rule)
-        // float adjusted_pot = 1.4 - rake_amount - jackpot_fee;
-        // net_changes[last_active] += adjusted_pot;
+        // Calculate net changes: winnings - investments
+        for (int p = 0; p < NUM_PLAYERS; p++) {
+            if (p == last_active) {
+                net_changes[p] = adjusted_pot - investments[p];
+            } else {
+                net_changes[p] = -investments[p];  // Lose only what they invested
+            }
+        }
         
         return net_changes;
     }
 
-    // Otherwise evaluate hands for showdown
+    // Multiple players to showdown - evaluate hands
     PokerEvaluator evaluator;
     vector<int> best_score;
     vector<int> winners;
@@ -663,36 +671,31 @@ vector<float> AoFState::returns() {
         }
     }
 
-    // Apply rake and jackpot fee - this is where utility is directly affected by rake
-    float original_pot = pot;
+    // Calculate total pot from all investments
+    float total_pot = 0.0;
+    for (int p = 0; p < NUM_PLAYERS; p++) {
+        total_pot += investments[p];
+    }
+    
+    // Apply rake and jackpot calculations
     float rake_amount = game->rake_per_hand;
     float jackpot_fee = game->jackpot_fee_per_hand;
-    float jackpot_payout = original_pot * game->jackpot_payout_percentage;
+    float jackpot_payout = total_pot * game->jackpot_payout_percentage;
     
-    // Utility calculation with rake components:
-    // 1. Rake directly reduces the pot (negative utility)
-    // 2. Jackpot fee is another reduction (negative utility)
-    // 3. Jackpot payout is a potential gain (positive utility)
-    float adjusted_pot = original_pot - rake_amount - jackpot_fee + jackpot_payout;
-
-    // In a rake-free game, sum of utilities would be zero (zero-sum game)
-    // With rake, sum of utilities is negative (negative-sum game)
-    // The total negative utility equals: rake_amount + jackpot_fee - jackpot_payout
-
-    // Split pot among winners
-    float share = adjusted_pot / winners.size();
-    for (int winner : winners) {
-        net_changes[winner] += share - initial_stacks[winner];  // Add winnings to their net change
-    }
-
-    // Apply losses for non-winners
+    // Adjusted pot after rake/fees but with potential jackpot payout
+    float adjusted_pot = total_pot - rake_amount - jackpot_fee + jackpot_payout;
+    
+    // Distribute winnings among winners
+    float share_per_winner = adjusted_pot / winners.size();
+    
+    // Calculate net changes for all players
     for (int p = 0; p < NUM_PLAYERS; p++) {
-        if (find(winners.begin(), winners.end(), p) == winners.end()) {
-            // Player is not a winner
-            if (all_in_players.count(p) > 0) {
-                // If they went all-in, they lose their entire stack
-                net_changes[p] -= initial_stacks[p];
-            }
+        if (find(winners.begin(), winners.end(), p) != winners.end()) {
+            // Winner: gets their share minus what they invested
+            net_changes[p] = share_per_winner - investments[p];
+        } else {
+            // Loser: loses what they invested
+            net_changes[p] = -investments[p];
         }
     }
     
