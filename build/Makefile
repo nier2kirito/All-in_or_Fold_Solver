@@ -57,13 +57,23 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/eleves-a/2022/zakaria.el-jaafari/aof_abstraction_with_rake
+CMAKE_SOURCE_DIR = /users/eleves-a/2022/zakaria.el-jaafari/AoF_mccfr
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/eleves-a/2022/zakaria.el-jaafari/aof_abstraction_with_rake/build
+CMAKE_BINARY_DIR = /users/eleves-a/2022/zakaria.el-jaafari/AoF_mccfr/build
 
 #=============================================================================
 # Targets provided globally by CMake.
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -85,11 +95,56 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/eleves-a/2022/zakaria.el-jaafari/aof_abstraction_with_rake/build/CMakeFiles /users/eleves-a/2022/zakaria.el-jaafari/aof_abstraction_with_rake/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/eleves-a/2022/zakaria.el-jaafari/AoF_mccfr/build/CMakeFiles /users/eleves-a/2022/zakaria.el-jaafari/AoF_mccfr/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/eleves-a/2022/zakaria.el-jaafari/aof_abstraction_with_rake/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/eleves-a/2022/zakaria.el-jaafari/AoF_mccfr/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,89 +172,514 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named aof
+# Target rules for targets named aof_mccfr_lib
 
 # Build rule for target.
-aof: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 aof
-.PHONY : aof
+aof_mccfr_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 aof_mccfr_lib
+.PHONY : aof_mccfr_lib
 
 # fast build rule for target.
-aof/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/build
-.PHONY : aof/fast
+aof_mccfr_lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/build
+.PHONY : aof_mccfr_lib/fast
 
-aof/aof.o: aof/aof.cpp.o
-.PHONY : aof/aof.o
+#=============================================================================
+# Target rules for targets named aof_mccfr
+
+# Build rule for target.
+aof_mccfr: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 aof_mccfr
+.PHONY : aof_mccfr
+
+# fast build rule for target.
+aof_mccfr/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr.dir/build.make CMakeFiles/aof_mccfr.dir/build
+.PHONY : aof_mccfr/fast
+
+#=============================================================================
+# Target rules for targets named run_tests
+
+# Build rule for target.
+run_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 run_tests
+.PHONY : run_tests
+
+# fast build rule for target.
+run_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/build
+.PHONY : run_tests/fast
+
+#=============================================================================
+# Target rules for targets named basic_training
+
+# Build rule for target.
+basic_training: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 basic_training
+.PHONY : basic_training
+
+# fast build rule for target.
+basic_training/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/basic_training.dir/build.make CMakeFiles/basic_training.dir/build
+.PHONY : basic_training/fast
+
+#=============================================================================
+# Target rules for targets named strategy_analysis
+
+# Build rule for target.
+strategy_analysis: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 strategy_analysis
+.PHONY : strategy_analysis
+
+# fast build rule for target.
+strategy_analysis/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/strategy_analysis.dir/build.make CMakeFiles/strategy_analysis.dir/build
+.PHONY : strategy_analysis/fast
+
+#=============================================================================
+# Target rules for targets named docs
+
+# Build rule for target.
+docs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 docs
+.PHONY : docs
+
+# fast build rule for target.
+docs/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/docs.dir/build.make CMakeFiles/docs.dir/build
+.PHONY : docs/fast
+
+examples/basic_training.o: examples/basic_training.cpp.o
+.PHONY : examples/basic_training.o
 
 # target to build an object file
-aof/aof.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/aof/aof.cpp.o
-.PHONY : aof/aof.cpp.o
+examples/basic_training.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/basic_training.dir/build.make CMakeFiles/basic_training.dir/examples/basic_training.cpp.o
+.PHONY : examples/basic_training.cpp.o
 
-aof/aof.i: aof/aof.cpp.i
-.PHONY : aof/aof.i
+examples/basic_training.i: examples/basic_training.cpp.i
+.PHONY : examples/basic_training.i
 
 # target to preprocess a source file
-aof/aof.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/aof/aof.cpp.i
-.PHONY : aof/aof.cpp.i
+examples/basic_training.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/basic_training.dir/build.make CMakeFiles/basic_training.dir/examples/basic_training.cpp.i
+.PHONY : examples/basic_training.cpp.i
 
-aof/aof.s: aof/aof.cpp.s
-.PHONY : aof/aof.s
+examples/basic_training.s: examples/basic_training.cpp.s
+.PHONY : examples/basic_training.s
 
 # target to generate assembly for a file
-aof/aof.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/aof/aof.cpp.s
-.PHONY : aof/aof.cpp.s
+examples/basic_training.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/basic_training.dir/build.make CMakeFiles/basic_training.dir/examples/basic_training.cpp.s
+.PHONY : examples/basic_training.cpp.s
 
-aof/mccfr.o: aof/mccfr.cpp.o
-.PHONY : aof/mccfr.o
+examples/strategy_analysis.o: examples/strategy_analysis.cpp.o
+.PHONY : examples/strategy_analysis.o
 
 # target to build an object file
-aof/mccfr.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/aof/mccfr.cpp.o
-.PHONY : aof/mccfr.cpp.o
+examples/strategy_analysis.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/strategy_analysis.dir/build.make CMakeFiles/strategy_analysis.dir/examples/strategy_analysis.cpp.o
+.PHONY : examples/strategy_analysis.cpp.o
 
-aof/mccfr.i: aof/mccfr.cpp.i
-.PHONY : aof/mccfr.i
+examples/strategy_analysis.i: examples/strategy_analysis.cpp.i
+.PHONY : examples/strategy_analysis.i
 
 # target to preprocess a source file
-aof/mccfr.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/aof/mccfr.cpp.i
-.PHONY : aof/mccfr.cpp.i
+examples/strategy_analysis.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/strategy_analysis.dir/build.make CMakeFiles/strategy_analysis.dir/examples/strategy_analysis.cpp.i
+.PHONY : examples/strategy_analysis.cpp.i
 
-aof/mccfr.s: aof/mccfr.cpp.s
-.PHONY : aof/mccfr.s
+examples/strategy_analysis.s: examples/strategy_analysis.cpp.s
+.PHONY : examples/strategy_analysis.s
 
 # target to generate assembly for a file
-aof/mccfr.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/aof/mccfr.cpp.s
-.PHONY : aof/mccfr.cpp.s
+examples/strategy_analysis.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/strategy_analysis.dir/build.make CMakeFiles/strategy_analysis.dir/examples/strategy_analysis.cpp.s
+.PHONY : examples/strategy_analysis.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
+src/aof/card.o: src/aof/card.cpp.o
+.PHONY : src/aof/card.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/main.cpp.o
-.PHONY : main.cpp.o
+src/aof/card.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/card.cpp.o
+.PHONY : src/aof/card.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+src/aof/card.i: src/aof/card.cpp.i
+.PHONY : src/aof/card.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/aof/card.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/card.cpp.i
+.PHONY : src/aof/card.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+src/aof/card.s: src/aof/card.cpp.s
+.PHONY : src/aof/card.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof.dir/build.make CMakeFiles/aof.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/aof/card.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/card.cpp.s
+.PHONY : src/aof/card.cpp.s
+
+src/aof/game.o: src/aof/game.cpp.o
+.PHONY : src/aof/game.o
+
+# target to build an object file
+src/aof/game.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/game.cpp.o
+.PHONY : src/aof/game.cpp.o
+
+src/aof/game.i: src/aof/game.cpp.i
+.PHONY : src/aof/game.i
+
+# target to preprocess a source file
+src/aof/game.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/game.cpp.i
+.PHONY : src/aof/game.cpp.i
+
+src/aof/game.s: src/aof/game.cpp.s
+.PHONY : src/aof/game.s
+
+# target to generate assembly for a file
+src/aof/game.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/game.cpp.s
+.PHONY : src/aof/game.cpp.s
+
+src/aof/game_config.o: src/aof/game_config.cpp.o
+.PHONY : src/aof/game_config.o
+
+# target to build an object file
+src/aof/game_config.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/game_config.cpp.o
+.PHONY : src/aof/game_config.cpp.o
+
+src/aof/game_config.i: src/aof/game_config.cpp.i
+.PHONY : src/aof/game_config.i
+
+# target to preprocess a source file
+src/aof/game_config.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/game_config.cpp.i
+.PHONY : src/aof/game_config.cpp.i
+
+src/aof/game_config.s: src/aof/game_config.cpp.s
+.PHONY : src/aof/game_config.s
+
+# target to generate assembly for a file
+src/aof/game_config.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/game_config.cpp.s
+.PHONY : src/aof/game_config.cpp.s
+
+src/aof/game_state.o: src/aof/game_state.cpp.o
+.PHONY : src/aof/game_state.o
+
+# target to build an object file
+src/aof/game_state.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/game_state.cpp.o
+.PHONY : src/aof/game_state.cpp.o
+
+src/aof/game_state.i: src/aof/game_state.cpp.i
+.PHONY : src/aof/game_state.i
+
+# target to preprocess a source file
+src/aof/game_state.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/game_state.cpp.i
+.PHONY : src/aof/game_state.cpp.i
+
+src/aof/game_state.s: src/aof/game_state.cpp.s
+.PHONY : src/aof/game_state.s
+
+# target to generate assembly for a file
+src/aof/game_state.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/game_state.cpp.s
+.PHONY : src/aof/game_state.cpp.s
+
+src/aof/poker_evaluator.o: src/aof/poker_evaluator.cpp.o
+.PHONY : src/aof/poker_evaluator.o
+
+# target to build an object file
+src/aof/poker_evaluator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/poker_evaluator.cpp.o
+.PHONY : src/aof/poker_evaluator.cpp.o
+
+src/aof/poker_evaluator.i: src/aof/poker_evaluator.cpp.i
+.PHONY : src/aof/poker_evaluator.i
+
+# target to preprocess a source file
+src/aof/poker_evaluator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/poker_evaluator.cpp.i
+.PHONY : src/aof/poker_evaluator.cpp.i
+
+src/aof/poker_evaluator.s: src/aof/poker_evaluator.cpp.s
+.PHONY : src/aof/poker_evaluator.s
+
+# target to generate assembly for a file
+src/aof/poker_evaluator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/aof/poker_evaluator.cpp.s
+.PHONY : src/aof/poker_evaluator.cpp.s
+
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr.dir/build.make CMakeFiles/aof_mccfr.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr.dir/build.make CMakeFiles/aof_mccfr.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr.dir/build.make CMakeFiles/aof_mccfr.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
+
+src/mccfr/node.o: src/mccfr/node.cpp.o
+.PHONY : src/mccfr/node.o
+
+# target to build an object file
+src/mccfr/node.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/node.cpp.o
+.PHONY : src/mccfr/node.cpp.o
+
+src/mccfr/node.i: src/mccfr/node.cpp.i
+.PHONY : src/mccfr/node.i
+
+# target to preprocess a source file
+src/mccfr/node.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/node.cpp.i
+.PHONY : src/mccfr/node.cpp.i
+
+src/mccfr/node.s: src/mccfr/node.cpp.s
+.PHONY : src/mccfr/node.s
+
+# target to generate assembly for a file
+src/mccfr/node.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/node.cpp.s
+.PHONY : src/mccfr/node.cpp.s
+
+src/mccfr/realtime_visualizer.o: src/mccfr/realtime_visualizer.cpp.o
+.PHONY : src/mccfr/realtime_visualizer.o
+
+# target to build an object file
+src/mccfr/realtime_visualizer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/realtime_visualizer.cpp.o
+.PHONY : src/mccfr/realtime_visualizer.cpp.o
+
+src/mccfr/realtime_visualizer.i: src/mccfr/realtime_visualizer.cpp.i
+.PHONY : src/mccfr/realtime_visualizer.i
+
+# target to preprocess a source file
+src/mccfr/realtime_visualizer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/realtime_visualizer.cpp.i
+.PHONY : src/mccfr/realtime_visualizer.cpp.i
+
+src/mccfr/realtime_visualizer.s: src/mccfr/realtime_visualizer.cpp.s
+.PHONY : src/mccfr/realtime_visualizer.s
+
+# target to generate assembly for a file
+src/mccfr/realtime_visualizer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/realtime_visualizer.cpp.s
+.PHONY : src/mccfr/realtime_visualizer.cpp.s
+
+src/mccfr/strategy_manager.o: src/mccfr/strategy_manager.cpp.o
+.PHONY : src/mccfr/strategy_manager.o
+
+# target to build an object file
+src/mccfr/strategy_manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/strategy_manager.cpp.o
+.PHONY : src/mccfr/strategy_manager.cpp.o
+
+src/mccfr/strategy_manager.i: src/mccfr/strategy_manager.cpp.i
+.PHONY : src/mccfr/strategy_manager.i
+
+# target to preprocess a source file
+src/mccfr/strategy_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/strategy_manager.cpp.i
+.PHONY : src/mccfr/strategy_manager.cpp.i
+
+src/mccfr/strategy_manager.s: src/mccfr/strategy_manager.cpp.s
+.PHONY : src/mccfr/strategy_manager.s
+
+# target to generate assembly for a file
+src/mccfr/strategy_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/strategy_manager.cpp.s
+.PHONY : src/mccfr/strategy_manager.cpp.s
+
+src/mccfr/trainer.o: src/mccfr/trainer.cpp.o
+.PHONY : src/mccfr/trainer.o
+
+# target to build an object file
+src/mccfr/trainer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/trainer.cpp.o
+.PHONY : src/mccfr/trainer.cpp.o
+
+src/mccfr/trainer.i: src/mccfr/trainer.cpp.i
+.PHONY : src/mccfr/trainer.i
+
+# target to preprocess a source file
+src/mccfr/trainer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/trainer.cpp.i
+.PHONY : src/mccfr/trainer.cpp.i
+
+src/mccfr/trainer.s: src/mccfr/trainer.cpp.s
+.PHONY : src/mccfr/trainer.s
+
+# target to generate assembly for a file
+src/mccfr/trainer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/trainer.cpp.s
+.PHONY : src/mccfr/trainer.cpp.s
+
+src/mccfr/utils.o: src/mccfr/utils.cpp.o
+.PHONY : src/mccfr/utils.o
+
+# target to build an object file
+src/mccfr/utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/utils.cpp.o
+.PHONY : src/mccfr/utils.cpp.o
+
+src/mccfr/utils.i: src/mccfr/utils.cpp.i
+.PHONY : src/mccfr/utils.i
+
+# target to preprocess a source file
+src/mccfr/utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/utils.cpp.i
+.PHONY : src/mccfr/utils.cpp.i
+
+src/mccfr/utils.s: src/mccfr/utils.cpp.s
+.PHONY : src/mccfr/utils.s
+
+# target to generate assembly for a file
+src/mccfr/utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aof_mccfr_lib.dir/build.make CMakeFiles/aof_mccfr_lib.dir/src/mccfr/utils.cpp.s
+.PHONY : src/mccfr/utils.cpp.s
+
+tests/test_card.o: tests/test_card.cpp.o
+.PHONY : tests/test_card.o
+
+# target to build an object file
+tests/test_card.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_card.cpp.o
+.PHONY : tests/test_card.cpp.o
+
+tests/test_card.i: tests/test_card.cpp.i
+.PHONY : tests/test_card.i
+
+# target to preprocess a source file
+tests/test_card.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_card.cpp.i
+.PHONY : tests/test_card.cpp.i
+
+tests/test_card.s: tests/test_card.cpp.s
+.PHONY : tests/test_card.s
+
+# target to generate assembly for a file
+tests/test_card.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_card.cpp.s
+.PHONY : tests/test_card.cpp.s
+
+tests/test_game_state.o: tests/test_game_state.cpp.o
+.PHONY : tests/test_game_state.o
+
+# target to build an object file
+tests/test_game_state.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_game_state.cpp.o
+.PHONY : tests/test_game_state.cpp.o
+
+tests/test_game_state.i: tests/test_game_state.cpp.i
+.PHONY : tests/test_game_state.i
+
+# target to preprocess a source file
+tests/test_game_state.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_game_state.cpp.i
+.PHONY : tests/test_game_state.cpp.i
+
+tests/test_game_state.s: tests/test_game_state.cpp.s
+.PHONY : tests/test_game_state.s
+
+# target to generate assembly for a file
+tests/test_game_state.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_game_state.cpp.s
+.PHONY : tests/test_game_state.cpp.s
+
+tests/test_main.o: tests/test_main.cpp.o
+.PHONY : tests/test_main.o
+
+# target to build an object file
+tests/test_main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_main.cpp.o
+.PHONY : tests/test_main.cpp.o
+
+tests/test_main.i: tests/test_main.cpp.i
+.PHONY : tests/test_main.i
+
+# target to preprocess a source file
+tests/test_main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_main.cpp.i
+.PHONY : tests/test_main.cpp.i
+
+tests/test_main.s: tests/test_main.cpp.s
+.PHONY : tests/test_main.s
+
+# target to generate assembly for a file
+tests/test_main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_main.cpp.s
+.PHONY : tests/test_main.cpp.s
+
+tests/test_mccfr.o: tests/test_mccfr.cpp.o
+.PHONY : tests/test_mccfr.o
+
+# target to build an object file
+tests/test_mccfr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_mccfr.cpp.o
+.PHONY : tests/test_mccfr.cpp.o
+
+tests/test_mccfr.i: tests/test_mccfr.cpp.i
+.PHONY : tests/test_mccfr.i
+
+# target to preprocess a source file
+tests/test_mccfr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_mccfr.cpp.i
+.PHONY : tests/test_mccfr.cpp.i
+
+tests/test_mccfr.s: tests/test_mccfr.cpp.s
+.PHONY : tests/test_mccfr.s
+
+# target to generate assembly for a file
+tests/test_mccfr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_mccfr.cpp.s
+.PHONY : tests/test_mccfr.cpp.s
+
+tests/test_poker_evaluator.o: tests/test_poker_evaluator.cpp.o
+.PHONY : tests/test_poker_evaluator.o
+
+# target to build an object file
+tests/test_poker_evaluator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_poker_evaluator.cpp.o
+.PHONY : tests/test_poker_evaluator.cpp.o
+
+tests/test_poker_evaluator.i: tests/test_poker_evaluator.cpp.i
+.PHONY : tests/test_poker_evaluator.i
+
+# target to preprocess a source file
+tests/test_poker_evaluator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_poker_evaluator.cpp.i
+.PHONY : tests/test_poker_evaluator.cpp.i
+
+tests/test_poker_evaluator.s: tests/test_poker_evaluator.cpp.s
+.PHONY : tests/test_poker_evaluator.s
+
+# target to generate assembly for a file
+tests/test_poker_evaluator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests/test_poker_evaluator.cpp.s
+.PHONY : tests/test_poker_evaluator.cpp.s
 
 # Help Target
 help:
@@ -208,17 +688,72 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... aof"
-	@echo "... aof/aof.o"
-	@echo "... aof/aof.i"
-	@echo "... aof/aof.s"
-	@echo "... aof/mccfr.o"
-	@echo "... aof/mccfr.i"
-	@echo "... aof/mccfr.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... test"
+	@echo "... docs"
+	@echo "... aof_mccfr"
+	@echo "... aof_mccfr_lib"
+	@echo "... basic_training"
+	@echo "... run_tests"
+	@echo "... strategy_analysis"
+	@echo "... examples/basic_training.o"
+	@echo "... examples/basic_training.i"
+	@echo "... examples/basic_training.s"
+	@echo "... examples/strategy_analysis.o"
+	@echo "... examples/strategy_analysis.i"
+	@echo "... examples/strategy_analysis.s"
+	@echo "... src/aof/card.o"
+	@echo "... src/aof/card.i"
+	@echo "... src/aof/card.s"
+	@echo "... src/aof/game.o"
+	@echo "... src/aof/game.i"
+	@echo "... src/aof/game.s"
+	@echo "... src/aof/game_config.o"
+	@echo "... src/aof/game_config.i"
+	@echo "... src/aof/game_config.s"
+	@echo "... src/aof/game_state.o"
+	@echo "... src/aof/game_state.i"
+	@echo "... src/aof/game_state.s"
+	@echo "... src/aof/poker_evaluator.o"
+	@echo "... src/aof/poker_evaluator.i"
+	@echo "... src/aof/poker_evaluator.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
+	@echo "... src/mccfr/node.o"
+	@echo "... src/mccfr/node.i"
+	@echo "... src/mccfr/node.s"
+	@echo "... src/mccfr/realtime_visualizer.o"
+	@echo "... src/mccfr/realtime_visualizer.i"
+	@echo "... src/mccfr/realtime_visualizer.s"
+	@echo "... src/mccfr/strategy_manager.o"
+	@echo "... src/mccfr/strategy_manager.i"
+	@echo "... src/mccfr/strategy_manager.s"
+	@echo "... src/mccfr/trainer.o"
+	@echo "... src/mccfr/trainer.i"
+	@echo "... src/mccfr/trainer.s"
+	@echo "... src/mccfr/utils.o"
+	@echo "... src/mccfr/utils.i"
+	@echo "... src/mccfr/utils.s"
+	@echo "... tests/test_card.o"
+	@echo "... tests/test_card.i"
+	@echo "... tests/test_card.s"
+	@echo "... tests/test_game_state.o"
+	@echo "... tests/test_game_state.i"
+	@echo "... tests/test_game_state.s"
+	@echo "... tests/test_main.o"
+	@echo "... tests/test_main.i"
+	@echo "... tests/test_main.s"
+	@echo "... tests/test_mccfr.o"
+	@echo "... tests/test_mccfr.i"
+	@echo "... tests/test_mccfr.s"
+	@echo "... tests/test_poker_evaluator.o"
+	@echo "... tests/test_poker_evaluator.i"
+	@echo "... tests/test_poker_evaluator.s"
 .PHONY : help
 
 

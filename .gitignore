@@ -1,2 +1,70 @@
+# Build directories
+build/
+cmake-build-*/
+
+# Generated files
 *.txt
-*.csv 
+*.csv
+*.bin
+*.dat
+
+# Compiled binaries
+*.exe
+*.out
+aof_mccfr
+basic_training
+strategy_analysis
+run_tests
+
+# Object files
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation build
+docs/html/
+docs/latex/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Backup files
+*.bak
+*.backup
+
+# Python cache (for tools)
+__pycache__/
+*.pyc
+*.pyo
+
+# Coverage files
+*.gcda
+*.gcno
+*.gcov
+coverage.info
+coverage/
+
+# Profiling files
+gmon.out
+perf.data*
+
+# Static analysis
+cppcheck.xml
+*.plist

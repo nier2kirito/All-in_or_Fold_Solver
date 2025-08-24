@@ -7,11 +7,9 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/users/eleves-a/2022/zakaria.el-jaafari/aof_abstraction_with_rake/CMakeLists.txt"
-  "CMakeFiles/3.26.5/CMakeCCompiler.cmake"
+  "/users/eleves-a/2022/zakaria.el-jaafari/AoF_mccfr/CMakeLists.txt"
   "CMakeFiles/3.26.5/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.26.5/CMakeSystem.cmake"
-  "/usr/share/cmake/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
   "/usr/share/cmake/Modules/CMakeGenericSystem.cmake"
@@ -20,10 +18,11 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake"
   "/usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake"
   "/usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
-  "/usr/share/cmake/Modules/Compiler/GNU-C.cmake"
   "/usr/share/cmake/Modules/Compiler/GNU-CXX.cmake"
   "/usr/share/cmake/Modules/Compiler/GNU.cmake"
-  "/usr/share/cmake/Modules/Platform/Linux-GNU-C.cmake"
+  "/usr/share/cmake/Modules/FindDoxygen.cmake"
+  "/usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+  "/usr/share/cmake/Modules/FindPackageMessage.cmake"
   "/usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake"
   "/usr/share/cmake/Modules/Platform/Linux-GNU.cmake"
   "/usr/share/cmake/Modules/Platform/Linux.cmake"
@@ -43,5 +42,10 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/aof.dir/DependInfo.cmake"
+  "CMakeFiles/aof_mccfr_lib.dir/DependInfo.cmake"
+  "CMakeFiles/aof_mccfr.dir/DependInfo.cmake"
+  "CMakeFiles/run_tests.dir/DependInfo.cmake"
+  "CMakeFiles/basic_training.dir/DependInfo.cmake"
+  "CMakeFiles/strategy_analysis.dir/DependInfo.cmake"
+  "CMakeFiles/docs.dir/DependInfo.cmake"
   )
