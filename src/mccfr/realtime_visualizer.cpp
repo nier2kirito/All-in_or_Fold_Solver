@@ -56,7 +56,7 @@ void RealtimeVisualizer::stop() {
         return;
     }
     
-    std::cout << "\n🛑 Stopping real-time visualization...\n";
+    std::cout << "\n Stopping real-time visualization...\n";
     
     // Signal threads to stop
     shouldStop_ = true;
@@ -465,7 +465,7 @@ Cache-Control: no-cache
     </style>
 </head>
 <body>
-    <h1>🚀 Real-time MCCFR Training Visualization</h1>
+    <h1> Real-time MCCFR Training Visualization</h1>
     
     <div class="container">
         <div class="chart-container">
@@ -787,7 +787,7 @@ Cache-Control: no-cache
                 
                 <div class="status-highlight" style="margin-top: 15px;">
                     <div class="status ${zeroSumOk ? 'zero-sum-ok' : 'zero-sum-warn'}">
-                        Zero-Sum Status: <strong>${zeroSumOk ? '✓ Perfect' : '✗ Warning'}</strong>
+                        Zero-Sum Status: <strong>${zeroSumOk ? 'Perfect' : 'Warning'}</strong>
                     </div>
                     <div class="status" style="font-size: 12px; opacity: 0.8; margin-top: 5px;">
                         ${zeroSumOk ? 'Game theory constraints satisfied' : 'Sum deviates from zero - check game logic'}
