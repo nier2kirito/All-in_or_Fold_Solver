@@ -314,4 +314,4 @@ The visualization helps identify:
 
 - **Issues**: Report bugs and request features on [GitHub Issues](https://github.com/nier2kirito/AoF_mccfr/issues)
 - **Discussions**: Join the conversation on [GitHub Discussions](https://github.com/nier2kirito/AoF_mccfr/discussions)
-- **Email**: Contact the maintainers at zakariaeljaafari0@gmaiL.com
+- **Email**: Contact the maintainers at zakariaeljaafari0@gmail.com
