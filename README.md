@@ -226,7 +226,6 @@ If you use this software in academic research, please cite:
   url={https://github.com/nier2kirito/AoF_mccfr}
 }
 ```
-
 ## Strategy Visualization
 
 The project includes a powerful Python visualizer that creates GTO Wizard-style poker hand range charts from trained MCCFR strategies. This tool helps analyze and understand the learned strategies visually.
@@ -313,6 +312,6 @@ The visualization helps identify:
 
 ## Support
 
-- **Issues**: Report bugs and request features on [GitHub Issues](https://github.com/yourusername/AoF_mccfr/issues)
-- **Discussions**: Join the conversation on [GitHub Discussions](https://github.com/yourusername/AoF_mccfr/discussions)
-- **Email**: Contact the maintainers at your.email@example.com
+- **Issues**: Report bugs and request features on [GitHub Issues](https://github.com/nier2kirito/AoF_mccfr/issues)
+- **Discussions**: Join the conversation on [GitHub Discussions](https://github.com/nier2kirito/AoF_mccfr/discussions)
+- **Email**: Contact the maintainers at zakariaeljaafari0@gmaiL.com
